@@ -8,10 +8,13 @@ jobs:
   # First job: Build
   build:
     name: Build Application
+      env:
+       BUILD_VERSION: 1.0.0
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
+      - run: echo "Building version $BUILD_VERSION"
       
       - name: Build step
         run: |
@@ -43,14 +46,15 @@ jobs:
   
   # Third job: Deploy
   deploy:
-    name: Deploy Application
-    needs: [build, test]  # Depends on both build and test jobs
+    if: github.ref == 'refs/heads/main'
+    needs: [build, test]
     runs-on: ubuntu-latest
     steps:
+      - name: Print branch name
+        run: echo "The current branch is ${{ github.ref }}"
       - name: Deploy
         run: |
-          echo "🚀 Deploying application..."
-          echo "Deployment successful!"
+          echo "Deploying application to production..."
       - name: Build status
         if: success()
         run: echo "✅ Build succeeded!"
