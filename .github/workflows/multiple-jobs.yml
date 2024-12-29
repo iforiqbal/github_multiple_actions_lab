@@ -17,6 +17,12 @@ jobs:
         run: |
           echo "🏗️ Building the application..."
           echo "Build completed successfully!"
+      - name: Build status
+        if: success()
+        run: echo "✅ Build succeeded!"
+      - name: Handle failure
+        if: failure()
+        run: echo "⚠️ Build failed. Please check the logs!"
   
   # Second job: Test
   test:
@@ -28,6 +34,12 @@ jobs:
         run: |
           echo "🧪 Running tests..."
           echo "All tests passed!"
+      - name: Build status
+        if: success()
+        run: echo "✅ Build succeeded!"
+      - name: Handle failure
+        if: failure()
+        run: echo "⚠️ Build failed. Please check the logs!"
   
   # Third job: Deploy
   deploy:
@@ -39,6 +51,14 @@ jobs:
         run: |
           echo "🚀 Deploying application..."
           echo "Deployment successful!"
+      - name: Build status
+        if: success()
+        run: echo "✅ Build succeeded!"
+      - name: Handle failure
+        if: failure()
+        run: echo "⚠️ Build failed. Please check the logs!"
+
+
 
   # Fourth job: Notify
   notify:
@@ -50,3 +70,9 @@ jobs:
         run: |
           echo "📧 Sending deployment notification..."
           echo "Notification sent!"
+      - name: Build status
+        if: success()
+        run: echo "✅ Build succeeded!"
+      - name: Handle failure
+        if: failure()
+        run: echo "⚠️ Build failed. Please check the logs!"
